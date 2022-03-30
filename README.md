@@ -23,97 +23,7 @@ Repository for the Wechaty Organization Website, a resource for the Wechaty Orga
 
 ## How To Post a Blog
 
-To submit a blog post for publication on [wechaty.js.org](https://wechaty.js.org), you can follow the steps below.
-
-1. Fork this repository. If you don't know what is meant by forking a repository, read about it [here](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo)
-2. Clone the forked repository to your local machine. If you don't know how to do that, [this article](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) explains it well
-3. Make sure your forked repository is in sync with the main repository. If you don't know how to sync a forked repository,read about it in [this article](https://help.github.com/cn/github/collaborating-with-issues-and-pull-requests/syncing-a-fork)
-4. We prefer using [gitHub flow](https://guides.github.com/introduction/flow/). Therefore start by creating a branch for your blog using the command `git checkout -b name-of-blog-branch`. Give the branch a meaningful name
-5. Create a markdown file in [jekyll/\_posts](./jekyll/_posts) folder. The file name should follow the format `YYYY-MM-DD-your-blog-slug.md`. For example `2016-12-03-welcome-to-wechaty.md`
-6. Write your blog in markdown in the file you created in the previous step. If you are not familiar with markdown syntax, you can learn it [here](https://guides.github.com/features/mastering-markdown/)
-7. Add related images to [jekyll/assets](./jekyll/assets) folder under `$YEAR/$MONTH-your-blog-slug/` directory
-8. Add your info into `jekyll/_contributors/your_github_id.md`
-9. Commit your changes using the command `git commit -am "YOUR_BLOG_TITLE"`. `YOUR_BLOG_TITLE` is the title of your blog
-10. Push your branch to github using the command `git push origin name-of-blog-branch`.
-11. Create new Pull Request(PR)
-12. Sign the [CLA](https://en.wikipedia.org/wiki/Contributor_License_Agreement)
-13. Wait for the continuous integration workflow run to finish. If it is failing, fix whatever is making it to fail so that CI turns green
-14. Wait for @wechaty/editors to review your PR
-
-That's it!
-
-## Guidelines For Writing a Blog Post
-
-### 1. Your blog post should have a Header
-
-The header of your blog post should have a title, author and image.
-
-This is illustrated in the example below:
-
-```yaml
----
-title: "'Score Your Face Photo' a ML&Wechaty practice"
-author: your_github_username
-image: your_teaser_image_path
----
-<One line abstract for your blog post>
-
-<Your beautiful blog post contents...>
-```
-
-### 2. Writing Style
-
-- You should keep all filenames and URLs as lowercase. Use `-` character between words instead of space when creating a new file or directory. e.g. `2017-10-06-wechat-pc-impactor` instead of `2017-10-06-WeChat PC Impactor`. No Chinese should be used in any filename.
-- Find a good image for the blog to make it more beautiful.
-- You should embed photos and videos before publishing, save all external files to the `/jekyll/assets/${YEAR}/$MONTH-your-blog-slug/` directory.
-
-### 3. Do Not Commit Unrelated Files
-
-Please do not commit unrelated files. It will keep things tidy and make it easier to review your PR.
-
-### 4. How To Add Videos and PDFs To Your Blog Post
-
-You can add videos and PDFs to your blog post by using the syntax below.
-
-Example of how to add video or pdf
-
-```html
-{% include iframe.html src="https://www.youtube.com/watch?v=3eq8wJfCAWs" %}
-```
-
-or
-
-```html
-{% include iframe.html src="/assets/2020/qijibot/final.pdf" %}
-```
-
-You can read more at： [Add iframe to wechaty blog](https://wechaty.js.org/2020/08/24/add-video-to-wechaty-blog/)
-
-## How To Run Tests
-
-In order to make sure your changes have not broken anything, you can run the following commands before pushing your changes to gitHub.
-
-```sh
-npm install
-npm test
-```
-
-## How To Preview Your changes
-
-If you want to preview your blog post or changes on localhost, you need to have Jekyll installed in your machine. You can follow the [jekyll quickstart](https://jekyllrb.com/docs/) instructions to install jekyll.
-
-### 1. Install Jekyll by Hand
-
-Run Jekyll at localhost to preview your blog post by running the commands below.
-
-```sh
-make install
-cd jekyll; make serve # or either run `./scripts/jekyll-serve.sh` for a fresh new start by cleaning cache
-```
-
-### 2. Preview the Blog
-
-You can view the blog by navigating to <http://127.0.0.1:4000/blog/> in your browser
+See: <https://github.com/wechaty/jekyll>
 
 ## How To Make Other Contributions
 
@@ -132,32 +42,6 @@ At the same time, we also meet up offline all over the world. Here are some acti
 - [Wechaty Country Wide Developer Conference](https://wechaty.js.org/2018/09/15/country-wide-developer-conference/)
 - .....
 
-### How to Run Locally
-
-1. Clone this repository: `git clone "https://github.com/wechaty/wechaty.js.org"`
-2. On the terminal navigate to the root directory `cd wechaty.js.org`
-3. Run the commands :
-    1. `npm install`
-    2. `npm run docusaurus:build`
-    3. `npm run docusaurus:serve`
-4. The site will be running locally on `http://localhost:3000`
-
-### How To Contribute To the Documentation
-
-1. Fork this repository
-2. Create your documentation branch: `git checkout -b branch-name`
-3. Make changes to the documentation in markdown
-4. Add changes to the staging area `git add .`
-5. Commit your changes using the command `git commit -m 'commit message'`
-6. Push your changes to gitHub `git push origin branch-name`
-7. Create new Pull Request
-
-## Resources
-
-- [Migrating from gitbook to docsify.js](https://timdams.com/2019/05/02/migrating-from-gitbook-to-docsify-js/)
-- [Integrating GitBook with JSDoc to Document Your Open Source Project](https://gist.github.com/KevinAst/7e12648245ff2a8e9c1557135014b933)
-- [Markdown Linting Rules Documents](https://github.com/DavidAnson/markdownlint/blob/master/doc/Rules.md)
-
 ## Writers
 
 [![contributor](https://sourcerer.io/fame/huan/wechaty/wechaty.js.org/images/0)](https://sourcerer.io/fame/huan/wechaty/wechaty.js.org/links/0)
@@ -173,7 +57,11 @@ To get to know all our writers, see <https://github.com/wechaty/wechaty.js.org/g
 
 ## History
 
-### main v0.9 (Aug 23, 2021)
+### main v0.11 (Mar 31, 2022)
+
+Split the repo to two: Jekyll & Docusaurus [#1](https://github.com/wechaty/wechaty.js.org/issues/1)
+
+### v0.9 (Aug 23, 2021)
 
 1. Add OpenAPI Specification docs at <https://wechaty.js.org/docs/openapi/> ([#1218](https://github.com/wechaty/wechaty.js.org/issues/1218))
 
@@ -196,7 +84,11 @@ Init version
 1. [@huan](https://github.com/huan), [Huan LI](https://wechaty.js.org/contributors/huan), Tencent TVP of Chatbot, \<zixia@zixia.net\>
 1. [@wj-Mcat](https://github.com/wj-Mcat), [Jingjing WU](https://wechaty.js.org/contributors/wj-mcat), Author of [Python Wechaty](https://github.com/wechaty/python-wechaty)
 
-And [wechaty/contributors](https://github.com/orgs/wechaty/teams/contributors/members)
+Teams:
+
+1. [wechaty/contributors](https://github.com/orgs/wechaty/teams/contributors/members)
+2. [wechaty/editors](https://github.com/orgs/wechaty/teams/editors/members)
+3. [wechaty/writers](https://github.com/orgs/wechaty/teams/writers/members)
 
 ## Copyright & License
 
