@@ -1,8 +1,27 @@
-# wechaty.js.org
+<div align="center">
+<a href="https://wechaty.js.org">
+  <img src="https://github.com/wechaty/wechaty.js.org/blob/main/docs/images/wechaty-docusaurus.png" alt="wechaty logo" height ="auto" width="800" />
+</a>
+<br />
+<h1>Wechaty Organization Website</h1>
+<p>
+Repository for the Wechaty Organization Website, a resource for the Wechaty Organization. It is the official Wechaty website for publishing latest news, blog posts, contributor profiles, and documentation from our open source community.
+</p>
+<p align="center">
+<a href="https://github.com/wechaty/wechaty.js.org" alt="GitHub contributors">
+<img src="https://img.shields.io/github/contributors/wechaty/wechaty.js.org.svg" /></a>
+<a href="https://github.com/wechaty/wechaty.js.org" alt="GitHub issues by-label">
+<img src="https://img.shields.io/github/issues/wechaty/wechaty.js.org" /></a>
+<a href="https://gitter.im/wechaty/wechaty" alt="Gitter">
+<img src="https://img.shields.io/badge/Gitter-@layer5.svg?logo=slack" /></a>
+</p>
 
-Wechaty Official Website for News, Blogs, Contributor Profiles, and Documentations.
+[![GitHub Pages CI](https://github.com/wechaty/wechaty.js.org/workflows/GitHub%20Pages%20CI/badge.svg)](https://github.com/wechaty/wechaty.js.org/actions?query=workflow%3A%22GitHub+Pages+CI%22)
+[![Powered by Wechaty](https://img.shields.io/badge/Powered%20By-Wechaty-brightgreen.svg)](https://github.com/Wechaty/wechaty)
+[![DIVIO documentation system](https://img.shields.io/badge/DIVIO-Documentation%20System-blue)](https://documentation.divio.com/)
+[![ES Modules](https://img.shields.io/badge/ES-Modules-brightgreen)](https://github.com/Chatie/tsconfig/issues/16)
 
-- <https://wechaty.js.org>
+</div>
 
 ## Usage
 
