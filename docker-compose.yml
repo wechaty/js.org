@@ -1,9 +1,8 @@
 version: '3.8'
 services:
-
-  reverse-proxy:
+  wechaty.js.org:
     image: nginx
-    container_name: reverse-proxy
+    container_name: wechaty.js.org
     network_mode: bridge
     expose:
       - 80
