@@ -45,6 +45,12 @@ Learn more from [nginx.conf](nginx.conf) and [docker-compose.yml](docker-compose
 
 That's all.
 
+## History
+
+### main (Mar 31, 2022)
+
+Split the repo into two: Jekyll & Docusaurus [#1](https://github.com/wechaty/wechaty.js.org/issues/1)
+
 ## Author
 
 [Huan LI](http://linkedin.com/in/zixia) is a serial entrepreneur, active angel investor with strong technology background.
