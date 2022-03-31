@@ -1,6 +1,6 @@
 <div align="center">
 <a href="https://wechaty.js.org">
-  <img src="https://github.com/wechaty/wechaty.js.org/blob/main/docs/images/wechaty-docusaurus.png" alt="wechaty logo" height ="auto" width="800" />
+  <img src="https://github.com/wechaty/wechaty.js.org/blob/main/docs/images/wechaty-website.png" alt="wechaty official website" height ="auto" width="800" />
 </a>
 <br />
 <h1>Wechaty Organization Website</h1>
