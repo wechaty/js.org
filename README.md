@@ -36,7 +36,27 @@ We are using Nginx as the front end proxy for serving the website traffic, from 
 1. Docusaurus Documentation <https://wechaty.github.io/docusaurus/>
 1. Jekyll Posts <https://wechaty.github.io/jekyll/>
 
-## Nginx Configuration
+```mermaid
+sequenceDiagram
+    participant Visitor
+    participant wechaty.js.org
+    participant Nginx Transparent Proxy
+    participant wechaty.github.io/jekyll
+    participant wechaty.github.io/docusaurus
+
+    Visitor->>wechaty.js.org: HTTP
+    wechaty.js.org->>Nginx Transparent Proxy: HTTP
+    Nginx Transparent Proxy->>wechaty.github.io/jekyll: HTTP
+    wechaty.github.io/jekyll->>Nginx Transparent Proxy: HTTP
+    Nginx Transparent Proxy->>wechaty.github.io/docusaurus: HTTP
+    wechaty.github.io/docusaurus->>Nginx Transparent Proxy: HTTP
+    Nginx Transparent Proxy->>wechaty.js.org: HTTP
+    wechaty.js.org->>Visitor: HTTP
+```
+
+This repo is maintaining the [docker-compose.yml](docker-compose.yml) for the *Nginx Transparent Proxy** part of the website.
+
+## Nginx Transparent Proxy Configuration
 
 1. for `/docs` locations, proxy pass to <https://wechaty.github.io/> with a prefix `docusaurus` added to the path.
 1. for `/{news,blogs,contributors,\d\d\d\d}` locations, proxy pass to <https://wechaty.github.io/> with a prefix `jekyll` added to the path.
@@ -44,6 +64,22 @@ We are using Nginx as the front end proxy for serving the website traffic, from 
 Learn more from [nginx.conf](nginx.conf) and [docker-compose.yml](docker-compose.yml) files.
 
 That's all.
+
+## Nginx Ingress Proxy Configuration
+
+We are using [Automated nginx proxy for Docker containers using docker-gen](https://github.com/nginx-proxy/nginx-proxy) to set up a container running nginx and docker-gen. docker-gen generates reverse proxy configs for nginx and reloads nginx when containers are started and stopped.
+
+See [Automated Nginx Reverse Proxy for Docker, Jason Wilder, Mar 25, 2014](http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/) for why we are using this.
+
+## TLS Certificate Authorization (CA) Configuration
+
+We are using [Automated ACME SSL certificate generation for nginx-proxy](https://github.com/nginx-proxy/acme-companion) lightweight companion container for nginx-proxy.
+
+It handles the automated creation, renewal and use of SSL certificates for proxied Docker containers through the ACME protocol.
+
+## Resource
+
+- [Host Multiple Websites On One VPS With Docker And Nginx (with TLS), Joel Hans, Apr 17, 2019](https://blog.ssdnodes.com/blog/host-multiple-websites-docker-nginx/)
 
 ## History
 
