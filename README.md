@@ -41,17 +41,17 @@ sequenceDiagram
     participant Visitor
     participant wechaty.js.org
     participant Nginx Transparent Proxy
-    participant wechaty.github.io/jekyll
     participant wechaty.github.io/docusaurus
+    participant wechaty.github.io/jekyll
 
-    Visitor->>wechaty.js.org: HTTP
+    Visitor->>wechaty.js.org: HTTPS
     wechaty.js.org->>Nginx Transparent Proxy: HTTP
-    Nginx Transparent Proxy->>wechaty.github.io/jekyll: HTTP
-    wechaty.github.io/jekyll->>Nginx Transparent Proxy: HTTP
-    Nginx Transparent Proxy->>wechaty.github.io/docusaurus: HTTP
-    wechaty.github.io/docusaurus->>Nginx Transparent Proxy: HTTP
+    Nginx Transparent Proxy->>wechaty.github.io/docusaurus: HTTPS /docs
+    wechaty.github.io/docusaurus->>Nginx Transparent Proxy: HTTPS /docs
+    Nginx Transparent Proxy->>wechaty.github.io/jekyll: HTTPS /{news,blog,contributors}
+    wechaty.github.io/jekyll->>Nginx Transparent Proxy: HTTPS /{news,blog,contributors}
     Nginx Transparent Proxy->>wechaty.js.org: HTTP
-    wechaty.js.org->>Visitor: HTTP
+    wechaty.js.org->>Visitor: HTTPS
 ```
 
 This repo is maintaining the [docker-compose.yml](docker-compose.yml) for the *Nginx Transparent Proxy** part of the website.
