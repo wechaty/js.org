@@ -71,6 +71,56 @@ We are using [Automated nginx proxy for Docker containers using docker-gen](http
 
 See [Automated Nginx Reverse Proxy for Docker, Jason Wilder, Mar 25, 2014](http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/) for why we are using this.
 
+Here's an example `docker-compose.yml` configuration for the **Nginx Ingress Proxy** layer:
+
+```yaml
+version: '3.8'
+services:
+
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    container_name: nginx-proxy
+    network_mode: bridge
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    healthcheck:
+      test: ["CMD", "true"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: nginx-proxy-le
+    network_mode: bridge
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+      - DEFAULT_EMAIL=wechaty@chatie.io
+    volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - certs:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+volumes:
+  conf:
+  vhost:
+  html:
+  dhparam:
+  certs:
+```
+
 ## TLS Certificate Authorization (CA) Configuration
 
 We are using [Automated ACME SSL certificate generation for nginx-proxy](https://github.com/nginx-proxy/acme-companion) lightweight companion container for nginx-proxy.
