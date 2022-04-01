@@ -25,7 +25,7 @@ Repository for the Wechaty Organization Website, a resource for the Wechaty Orga
 
 Goto Jekyll Repo: <https://github.com/wechaty/jekyll>
 
-## 2l Documentation
+## 2. Documentation
 
 Goto Docusaurus Repo: <https://github.com/docusaurus>
 
