@@ -54,7 +54,7 @@ sequenceDiagram
     wechaty.js.org->>Visitor: HTTPS
 ```
 
-This repo is maintaining the [docker-compose.yml](docker-compose.yml) for the *Nginx Transparent Proxy** part of the website.
+This repo is maintaining the [docker-compose.yml](docker-compose.yml) for the **Nginx Transparent Proxy** layer (in the center of the above diagram) of the website.
 
 ## Nginx Transparent Proxy Configuration
 
