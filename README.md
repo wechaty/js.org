@@ -16,8 +16,8 @@ Repository for the Wechaty Organization Website, a resource for the Wechaty Orga
 <img src="https://img.shields.io/badge/Gitter-@layer5.svg?logo=slack" /></a>
 </p>
 
-[![Wechaty Docusaurus](https://github.com/wechaty/docusaurus/workflows/Wechaty%20Docusaurus/badge.svg)](https://github.com/wechaty/wechaty.js.org/actions?query=workflow%3A%22Docusaurus%22)
-[![Wechaty Jekyll](https://github.com/wechaty/jekyll/workflows/Wechaty%20Jekyll/badge.svg)](https://github.com/wechaty/wechaty.js.org/actions?query=workflow%3A%22Jekyll%22)
+[![Docusaurus](https://github.com/wechaty/docusaurus/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/wechaty/docusaurus/actions/workflows/gh-pages.yml)
+[![Jekyll](https://github.com/wechaty/jekyll/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/wechaty/jekyll/actions/workflows/gh-pages.yml)
 
 </div>
 
