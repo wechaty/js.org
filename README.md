@@ -21,6 +21,20 @@ Repository for the Wechaty Organization Website, a resource for the Wechaty Orga
 
 </div>
 
+## 1. News, Blog, Contributor Profiles
+
+Goto Jekyll Repo: <https://github.com/wechaty/jekyll>
+
+## 2l Documentation
+
+Goto Docusaurus Repo: <https://github.com/docusaurus>
+
+# Wechaty Official Website Transparent Proxy
+
+This repo is the configuration for transparent proxy GitHub Pages of Jekyll and Docusaurus for merging them into our <https://wechaty.js.org> home page.
+
+If you want to create blog post, or contribute to documentation, please visit the above repos ([Jekyll](https://github.com/wechaty/jekyll) & [Docusaurus](https://github.com/docusaurus)).
+
 ## Usage
 
 ```sh
