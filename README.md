@@ -135,7 +135,7 @@ It handles the automated creation, renewal and use of SSL certificates for proxi
 
 ### main (Mar 31, 2022)
 
-Split the repo into two: Jekyll & Docusaurus [#1](https://github.com/wechaty/wechaty.js.org/issues/1)
+Split the repo into two: Jekyll & Docusaurus [Issue #1](https://github.com/wechaty/wechaty.js.org/issues/1)
 
 ## Author
 
