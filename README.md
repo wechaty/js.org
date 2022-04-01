@@ -23,9 +23,13 @@ Repository for the Wechaty Organization Website, a resource for the Wechaty Orga
 
 ## 1. News, Blog, Contributor Profiles
 
+[![Wechaty Jekyll](https://github.com/wechaty/jekyll/blob/main/docs/images/wechaty-jekyll.png)](https://github.com/wechaty/jekyll)
+
 Goto Jekyll Repo: <https://github.com/wechaty/jekyll>
 
 ## 2. Documentation
+
+[![Wechaty Docusaurus](https://github.com/wechaty/docusaurus/blob/main/docs/images/wechaty-docusaurus.png)](https://github.com/wechaty/docusaurus)
 
 Goto Docusaurus Repo: <https://github.com/docusaurus>
 
