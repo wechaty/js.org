@@ -64,6 +64,7 @@ sequenceDiagram
 
     Visitor->>wechaty.js.org: HTTPS
     wechaty.js.org->>Nginx Transparent Proxy: HTTP
+    Note right of Nginx Transparent Proxy: Request files from GitHub Pages
     Nginx Transparent Proxy->>wechaty.github.io/docusaurus: HTTPS /docs
     wechaty.github.io/docusaurus-->>Nginx Transparent Proxy: HTTPS /docs
     Nginx Transparent Proxy->>wechaty.github.io/jekyll: HTTPS /{news,blog,contributors}
