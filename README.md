@@ -31,13 +31,13 @@ Goto Jekyll Repo: <https://github.com/wechaty/jekyll>
 
 [![Wechaty Docusaurus](https://github.com/wechaty/docusaurus/blob/main/docs/images/wechaty-docusaurus.png)](https://github.com/wechaty/docusaurus)
 
-Goto Docusaurus Repo: <https://github.com/docusaurus>
+Goto Docusaurus Repo: <https://github.com/wechaty/docusaurus>
 
 # Wechaty Official Website Transparent Proxy
 
 This repo is the configuration for transparent proxy GitHub Pages of Jekyll and Docusaurus for merging them into our <https://wechaty.js.org> home page.
 
-If you want to create blog post, or contribute to documentation, please visit the above repos ([Jekyll](https://github.com/wechaty/jekyll) & [Docusaurus](https://github.com/docusaurus)).
+If you want to create blog post, or contribute to documentation, please visit the above repos ([Jekyll](https://github.com/wechaty/jekyll) & [Docusaurus](https://github.com/wechaty/docusaurus)).
 
 ## Usage
 
