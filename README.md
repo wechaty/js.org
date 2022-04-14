@@ -8,10 +8,10 @@
 Repository for the Wechaty Organization Website, a resource for the Wechaty Organization. It is the official Wechaty website for publishing latest news, blog posts, contributor profiles, and documentation from our open source community.
 </p>
 <p align="center">
-<a href="https://github.com/wechaty/wechaty.js.org" alt="GitHub contributors">
-<img src="https://img.shields.io/github/contributors/wechaty/wechaty.js.org.svg" /></a>
-<a href="https://github.com/wechaty/wechaty.js.org" alt="GitHub issues by-label">
-<img src="https://img.shields.io/github/issues/wechaty/wechaty.js.org" /></a>
+<a href="https://github.com/wechaty/js.org" alt="GitHub contributors">
+<img src="https://img.shields.io/github/contributors/wechaty/js.org.svg" /></a>
+<a href="https://github.com/wechaty/js.org" alt="GitHub issues by-label">
+<img src="https://img.shields.io/github/issues/wechaty/js.org" /></a>
 <a href="https://gitter.im/wechaty/wechaty" alt="Gitter">
 <img src="https://img.shields.io/badge/Gitter-@layer5.svg?logo=slack" /></a>
 </p>
