@@ -1,0 +1,14 @@
+name = "wechaty-js-org"
+compatibility_date = "2025-01-01"
+
+# Cloudflare Pages uses this to detect project root
+pages_build_output_dir = "./"
+
+# Service Bindings: HTTP origins for routing
+[[services]]
+binding = "DOCUSAURUS"
+url = "https://wechaty.github.io/docusaurus"
+
+[[services]]
+binding = "JEKYLL"
+url = "https://wechaty.github.io/jekyll"
