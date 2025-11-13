@@ -1,0 +1,28 @@
+{
+  "name": "js.org",
+  "version": "1.0.0",
+  "description": "<div align=\"center\"> <a href=\"https://wechaty.js.org\">   <img src=\"https://github.com/wechaty/wechaty.js.org/blob/main/docs/images/wechaty-website.png\" alt=\"wechaty official website\" width=\"800\" /> </a> <br/> <h1>Wechaty Organization Website (Cloudflare Pages Proxy)</h1> <p> This repository hosts the <b>Cloudflare Pages</b> implementation of the Wechaty Website Proxy, replacing the legacy Nginx + Docker setup and enabling the JS.org custom domain without requiring DNS control. </p> </div>",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.48.0"
+  },
+  "scripts": {
+    "dev": "wrangler pages dev . --log-level=debug",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wechaty/js.org.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/wechaty/js.org/issues"
+  },
+  "homepage": "https://github.com/wechaty/js.org#readme"
+}
