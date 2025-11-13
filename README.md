@@ -171,10 +171,10 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    A[Incoming Request] --> B{Starts With<br>/docs, /press,<br>/qrcode, /search,<br>/img, /css, /js?}
+    A[Incoming Request] --> B{Starts With\n/docs, /press,\n/qrcode, /search,\n/img, /css, /js?}
 
-    B -->|Yes| C[Docusaurus Path<br>/docusaurus{path}]
-    B -->|No| D[Jekyll Path<br>/jekyll{path}]
+    B -->|Yes| C["Docusaurus Path\n/docusaurus\{path\}"]
+    B -->|No| D["Jekyll Path\n/jekyll\{path\}"]
 
     D --> E{Status 404?}
     E -->|Yes| C
