@@ -1,3 +1,40 @@
+<div align="center">
+<a href="https://wechaty.js.org">
+  <img src="https://github.com/wechaty/wechaty.js.org/blob/main/docs/images/wechaty-website.png" alt="wechaty official website" height ="auto" width="800" />
+</a>
+<br />
+<h1>Wechaty Organization Website</h1>
+<p>
+Repository for the Wechaty Organization Website, a resource for the Wechaty Organization. It is the official Wechaty website for publishing latest news, blog posts, contributor profiles, and documentation from our open source community.
+</p>
+<p align="center">
+<a href="https://github.com/wechaty/js.org" alt="GitHub contributors">
+<img src="https://img.shields.io/github/contributors/wechaty/js.org.svg" /></a>
+<a href="https://github.com/wechaty/js.org" alt="GitHub issues by-label">
+<img src="https://img.shields.io/github/issues/wechaty/js.org" /></a>
+<a href="https://gitter.im/wechaty/wechaty" alt="Gitter">
+<img src="https://img.shields.io/badge/Gitter-@layer5.svg?logo=slack" /></a>
+</p>
+
+[![Docusaurus](https://github.com/wechaty/docusaurus/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/wechaty/docusaurus/actions/workflows/gh-pages.yml)
+[![Jekyll](https://github.com/wechaty/jekyll/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/wechaty/jekyll/actions/workflows/gh-pages.yml)
+
+</div>
+
+## 1. News, Blog, Contributor Profiles
+
+[![Wechaty Jekyll](https://github.com/wechaty/jekyll/blob/main/docs/images/wechaty-jekyll.png)](https://github.com/wechaty/jekyll)
+
+Goto Jekyll Repo: <https://github.com/wechaty/jekyll>
+
+## 2. Documentation
+
+[![Wechaty Docusaurus](https://github.com/wechaty/docusaurus/blob/main/docs/images/wechaty-docusaurus.png)](https://github.com/wechaty/docusaurus)
+
+Goto Docusaurus Repo: <https://github.com/wechaty/docusaurus>
+
+
+
 # 🌐 Wechaty.js.org — Cloudflare Worker Transparent Proxy
 
 <p align="center">
@@ -12,22 +49,6 @@
 </a>
 </p>
 
-<div align="center">
-<a href="https://wechaty.js.org">
-  <img src="https://github.com/wechaty/wechaty.js.org/blob/main/docs/images/wechaty-website.png" alt="wechaty official website" width="800" />
-</a>
-<br/>
-<h1>Wechaty Organization Website</h1>
-<p>
-This repository hosts the official Wechaty website proxy layer — now rebuilt entirely using <b>Cloudflare Workers</b>, replacing the legacy Nginx + Docker Compose setup.
-</p>
-</div>
-
-<div align="center">
-<a href="https://wechaty.js.org">
-  <img src="https://github.com/wechaty/wechaty.js.org/blob/main/docs/images/wechaty-website.png" alt="wechaty official website" width="800" />
-</a>
-<br/>
 <h1>Wechaty Organization Website</h1>
 <p>
 This repository hosts the official Wechaty website proxy layer — now rebuilt entirely using **Cloudflare Workers**, replacing the legacy Nginx + Docker Compose setup.
