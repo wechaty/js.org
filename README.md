@@ -34,7 +34,6 @@ Goto Jekyll Repo: <https://github.com/wechaty/jekyll>
 Goto Docusaurus Repo: <https://github.com/wechaty/docusaurus>
 
 
-
 # 🌐 Wechaty.js.org — Cloudflare Worker Transparent Proxy
 
 <p align="center">
@@ -66,372 +65,116 @@ The Worker routes traffic from **wechaty.js.org** to two different GitHub Pages 
 
 ---
 
-## 🚀 Overview
+# Wechaty.js.org — Cloudflare Pages Router (Simplified)
 
-### 📌 What this repo used to do
+Unified entry point for the Wechaty website, powered by **Cloudflare Pages + Pages Functions**.
 
-Historically, `wechaty.js.org` served as a transparent proxy that merged two different GitHub Pages sites:
+This setup merges two existing Wechaty web properties:
 
-1. **Jekyll (News, Blog, Contributors)**: [https://github.com/wechaty/jekyll](https://github.com/wechaty/jekyll)
-2. **Docusaurus (Documentation)**: [https://github.com/wechaty/docusaurus](https://github.com/wechaty/docusaurus)
+* **Jekyll** — News, blog, contributors → [https://github.com/wechaty/jekyll](https://github.com/wechaty/jekyll)
+* **Docusaurus** — Documentation → [https://github.com/wechaty/docusaurus](https://github.com/wechaty/docusaurus)
 
-The original architecture used:
+Served together under:
 
-* Docker Compose
-* Nginx reverse proxy
-* Automated TLS via nginx-proxy + ACME companion
-
-It looked like this:
-
-```mermaid
-sequenceDiagram
-    participant Visitor
-    participant wechaty.js.org
-    participant Nginx Transparent Proxy
-    participant wechaty.github.io/docusaurus
-    participant wechaty.github.io/jekyll
-
-    Visitor->>wechaty.js.org: HTTPS
-    wechaty.js.org->>Nginx Transparent Proxy: HTTP
-    Note right of Nginx Transparent Proxy: Request files from GitHub Pages
-    Nginx Transparent Proxy->>wechaty.github.io/docusaurus: HTTPS /docs
-    wechaty.github.io/docusaurus-->>Nginx Transparent Proxy: HTTPS /docs
-    Nginx Transparent Proxy->>wechaty.github.io/jekyll: HTTPS /{news,blog,contributors}
-    wechaty.github.io/jekyll-->>Nginx Transparent Proxy: HTTPS /{news,blog,contributors}
-    Nginx Transparent Proxy-->>wechaty.js.org: HTTP
-    wechaty.js.org-->>Visitor: HTTPS
-```
-
-### 🚀 What this repo does now
-
-All of the above functionality is now implemented in **one Cloudflare Worker**:
-
-* Same routing logic
-* Same fallback behavior
-* Same transparent proxying
-* No breaking changes to URLs
-* **Much faster**, globally distributed, serverless infrastructure
-
-The old configuration files have been preserved in:
-
-```
-/deprecated/
-```
-
-for historical reference.
-
-The legacy architecture used:
-
-* Docker Compose
-* Nginx reverse-proxy
-* Automated TLS (nginx-proxy, acme-companion)
-
-That system routed Wechaty website traffic to:
-
-* **Docusaurus** documentation → `https://wechaty.github.io/docusaurus/`
-* **Jekyll** news, blogs, contributors → `https://wechaty.github.io/jekyll/`
-
-This repo now contains a **Cloudflare Worker** that implements:
-
-* The same routing logic
-* Internal redirect following
-* 404 fallback from Jekyll → Docusaurus
-* Transparent proxying (no URL changes)
-* Edge caching with `stale-while-revalidate`
-
-All old Nginx and Docker configurations have been moved to:
-
-```
-/deprecated/
-```
-
-for historical reference.
+👉 **[https://wechaty.js.org](https://wechaty.js.org)**
 
 ---
 
-## 🧭 Architecture
+# 🧭 Architecture (Short)
 
-### 🏛️ Legacy Architecture (Historical)
-
-```mermaid
-sequenceDiagram
-    participant Visitor
-    participant wechaty.js.org
-    participant Nginx Transparent Proxy
-    participant wechaty.github.io/docusaurus
-    participant wechaty.github.io/jekyll
-
-    Visitor->>wechaty.js.org: HTTPS
-    wechaty.js.org->>Nginx Transparent Proxy: HTTP
-    Note right of Nginx Transparent Proxy: Request files from GitHub Pages
-    Nginx Transparent Proxy->>wechaty.github.io/docusaurus: HTTPS /docs
-    wechaty.github.io/docusaurus-->>Nginx Transparent Proxy: HTTPS /docs
-    Nginx Transparent Proxy->>wechaty.github.io/jekyll: HTTPS /{news,blog,contributors}
-    wechaty.github.io/jekyll-->>Nginx Transparent Proxy: HTTPS /{news,blog,contributors}
-    Nginx Transparent Proxy-->>wechaty.js.org: HTTP
-    wechaty.js.org-->>Visitor: HTTPS
 ```
+Visitor → Cloudflare Pages → Pages Function Router
+            ↓                     ↓
+        Docusaurus <—— fallback —— Jekyll
+```
+
+* Paths starting with `/docs`, `/img`, `/css`, `/js`, etc. → **Docusaurus**
+* Everything else → **Jekyll**, with `404` fallback to Docusaurus
 
 ---
 
-### ⚡ New Cloudflare Worker Architecture (Current)
-
-#### High-level Flow
-
-```mermaid
-flowchart LR
-    A[Visitor Browser] --> B[Cloudflare Edge]
-    B --> C[Cloudflare Worker]
-    C -->|/docs, /img, /css...| D[Docusaurus on GitHub Pages]
-    C -->|All other paths| E[Jekyll on GitHub Pages]
-    E -->|404 fallback| D
-    D --> C --> B --> A
-```
-
-#### Worker Routing Logic
-
-```mermaid
-flowchart TD
-    A[Incoming Request] --> B{Starts With\n/docs, /press,\n/qrcode, /search,\n/img, /css, /js?}
-
-    B -->|Yes| C["Docusaurus Path\n/docusaurus\{path\}"]
-    B -->|No| D["Jekyll Path\n/jekyll\{path\}"]
-
-    D --> E{Status 404?}
-    E -->|Yes| C
-    E -->|No| F[Return Jekyll Response]
-
-    C --> G[Return Docusaurus Response]
-```
-
-#### Edge Caching Layer
-
-```mermaid
-flowchart TD
-    A[Request] --> B{Cache Hit?}
-    B -->|Yes| C[Return Cached Response
-    X-Cache: HIT]
-    B -->|No| D[Fetch from GitHub Pages
-    Follow redirects]
-    D --> E[Store in Edge Cache
-    X-Cache: MISS]
-    E --> C
-```
-
-### Old Architecture
+# 📁 Minimal Folder Structure
 
 ```
-Visitor → Nginx Reverse Proxy → GitHub Pages (Jekyll/Docusaurus)
+your-project/
+├── functions/
+│   └── index.js
+├── public/
+├── CNAME
+└── README.md
 ```
 
-### New Architecture
-
-```
-Visitor → Cloudflare → Worker → GitHub Pages (Jekyll/Docusaurus)
-```
-
-The Worker runs globally on Cloudflare’s edge, providing built‑in caching, instant deploys, and no server maintenance.
-
----
-
-## 🔀 Routing Rules
-
-The Worker replicates the original Nginx logic:
-
-### 📘 Docusaurus Routes
-
-Paths beginning with:
-
-```
-/docs
-/press
-/qrcode
-/search
-/img
-/css
-/js
-```
-
-are proxied to:
-
-```
-https://wechaty.github.io/docusaurus{path}
-```
-
-### 📝 Jekyll Routes (with fallback)
-
-All other paths:
-
-1. First try → `https://wechaty.github.io/jekyll{path}`
-2. If **404**, fallback → `https://wechaty.github.io/docusaurus{path}`
-
-### 🔁 Redirect Following
-
-If upstream returns 301/302/303/307/308, the Worker **internally refetches** and returns the final content, matching Nginx `@handle_redirects`.
-
----
-
-## ⚡ Cloudflare Worker Code
-
-The Worker is implemented in:
-
-```
-src/index.js
-```
-
-It includes:
-
-* Routing rules
-* Internal redirect loop
-* Edge cache write/read
-* GitHub Pages origin logic
-
-Key features:
-
-* `caches.default` for edge caching
-* `stale-while-revalidate` behavior
-* Custom `X-Cache` and `X-Proxy-By` headers
-
----
-
-## 📦 Deployment (Wrangler)
-
-### 1. Install Wrangler
-
-```bash
-npm install -g wrangler
-wrangler login
-```
-
-### 2. Deploy Worker
-
-```bash
-wrangler deploy
-```
-
-### 3. Bind Custom Domain
-
-Cloudflare Dashboard → **Workers & Pages → wechaty-proxy → Custom Domains**:
+`CNAME` file:
 
 ```
 wechaty.js.org
 ```
 
-The Worker now receives all production traffic.
-
 ---
 
-## 🗂️ Repository Structure
+# 🔥 functions/index.js (Router)
 
-```
-wechaty.js.org/
-├─ src/
-│  └─ index.js            # Cloudflare Worker code
-├─ wrangler.toml          # Worker configuration
-├─ deprecated/            # Old Docker + Nginx config files
-├─ README.md              # (this file)
-└─ ...
-```
+```js
+export async function onRequest({ request, env }) {
+  const url = new URL(request.url);
+  const path = url.pathname;
 
-### `wrangler.toml` Example
+  const docusaurusPrefixes = [
+    '/docs', '/press', '/qrcode', '/search', '/img', '/css', '/js'
+  ];
 
-```toml
-name = "wechaty-proxy"
-main = "src/index.js"
-compatibility_date = "2025-11-13"
+  if (docusaurusPrefixes.some(p => path.startsWith(p))) {
+    return env.DOCUSAURUS.fetch(request);
+  }
 
-routes = [
-  { pattern = "wechaty.js.org/*", custom_domain = true }
-]
+  const res = await env.JEKYLL.fetch(request);
+  if (res.status !== 404) return res;
+
+  return env.DOCUSAURUS.fetch(request);
+}
 ```
 
 ---
 
-## 📊 Observability & Debugging
+# 🔧 Bind Backends
 
-### Real-time Logs
+In Cloudflare Pages → **Settings → Functions → Service Bindings**:
+
+```
+DOCUSAURUS → https://wechaty.github.io/docusaurus
+JEKYLL     → https://wechaty.github.io/jekyll
+```
+
+---
+
+# 🌐 JS.ORG Setup (Required)
+
+1. Add `CNAME` file with `wechaty.js.org`
+2. Submit PR to JS.ORG: add `"wechaty": "wechaty.js.org"`
+3. JS.ORG team adds DNS:
+
+```
+wechaty.js.org CNAME <your-project>.pages.dev
+```
+
+---
+
+# 🔗 Add Domain to Cloudflare Pages (via API)
+
+Dashboard cannot add JS.ORG domains — use API:
 
 ```bash
-wrangler tail wechaty-proxy
+curl -X POST \
+  https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/pages/projects/<PROJECT>/domains \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json" \
+  --data '{"name":"wechaty.js.org"}'
 ```
 
-### Useful Headers
-
-* `X-Cache: HIT/MISS`
-* `X-Proxy-By: wechaty.js.org-cloudflare-worker`
-
-### Cloudflare Analytics
-
-Shows global traffic, latency, and cache hit ratios.
+Done! Pages now serves the entire Wechaty website.
 
 ---
 
-## 🧠 Design Principles
+# 👤 Author
 
-* Maintain full compatibility with original site routing.
-* Minimize latency through global edge execution.
-* Keep wechaty.js.org URLs stable — no redirects to GitHub Pages.
-* Reduce origin load via aggressive caching.
-* Use modern serverless Infrastructure instead of maintaining VMs or containers.
-
----
-
-## 📚 Historical Reference & History
-
-The entire legacy infrastructure has been preserved for archival purposes under `deprecated/`:
-
-* `nginx.conf`
-* `docker-compose.yml`
-* TLS automation (ACME companion)
-
-These files document years of Wechaty website operations before migration to Cloudflare.
-
-### 📜 History
-
-#### **Mar 31, 2022 — Split Repo (Jekyll & Docusaurus)**
-
-Tracked via Issue #1: [https://github.com/wechaty/wechaty.js.org/issues/1](https://github.com/wechaty/wechaty.js.org/issues/1)
-
-#### **Nov 2025 — Migration to Cloudflare Workers**
-
-* Replaced Nginx + Docker with a fully serverless, zero-maintenance setup.
-* Introduced global edge caching, redirect-following, and routing logic in a single Worker.
-* Improved latency worldwide.
-* Simplified deployment to a single `wrangler deploy`.
-
-#### **2021–2025 — Wechaty Website Evolution**
-
-* Continuous enhancements to documentation (Docusaurus)
-* Growth of the blog and community contributions (Jekyll)
-* Stability improvements in serving multi-source content under one domain
-
-The new Worker architecture ensures Wechaty.js.org remains stable, fast, and easy to maintain for future contributors.
-All original Docker, Nginx, and TLS configs are preserved under:
-
-```
-/deprecated/
-```
-
-including:
-
-* `nginx.conf`
-* `docker-compose.yml`
-* ACME/Let’s Encrypt automation
-
-These can be revisited for migration context or future reference.
-
----
-
-## 👤 Author
-
-**Huan LI (李卓桓)** — creator of Wechaty, open-source advocate, and cloud architect.
-
-GitHub: [https://github.com/huan](https://github.com/huan)
-Website: [https://wechaty.js.org](https://wechaty.js.org)
-
----
-
-## 📄 License
-
-This project is licensed under the **Apache-2.0 License**.
-See `LICENSE` for details.
+**Huan Li (李卓桓)** — [https://github.com/huan](https://github.com/huan)

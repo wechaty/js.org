@@ -1,0 +1,7 @@
+[[services]]
+binding = "DOCUSAURUS"
+service = "docusaurus-service"
+
+[[services]]
+binding = "JEKYLL"
+service = "jekyll-service"
