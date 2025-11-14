@@ -197,6 +197,10 @@ Open PR in [https://github.com/js-org/js.org](https://github.com/js-org/js.org):
 
 JS.org maintainers will CNAME `wechaty.js.org` → Cloudflare Pages.
 
+### 5. Set custom domain
+
+run `scripts/custom-domain-4-pages-dev.sh` with your cloudflare account email/id and the global api key.
+
 ---
 
 ## ⚙️ _worker.js — Cloudflare Worker Behavior
