@@ -27,35 +27,55 @@ This repository hosts the <b>Cloudflare Pages</b> implementation of the Wechaty 
 
 ## 🚀 Overview
 
-The Wechaty website consists of two GitHub Pages projects:
+This repository now uses **Cloudflare Pages + _worker.js** to implement a full reverse-proxy layer that merges two GitHub Pages sites (Jekyll + Docusaurus) into the unified domain **wechaty.js.org**, exactly replicating the original Nginx configuration.
 
-* **Docusaurus Documentation:** [https://wechaty.github.io/docusaurus/](https://wechaty.github.io/docusaurus/)
-* **Jekyll Blog & Community:** [https://wechaty.github.io/jekyll/](https://wechaty.github.io/jekyll/)
+Unlike Pages Functions — which cannot intercept static paths like `/img`, `/css`, `/js`, or `/assets` — the `_worker.js` file provides **full Worker-level request control**, enabling:
 
-Historically, a Dockerized Nginx proxy merged these into a unified domain **wechaty.js.org**.
+* Transparent reverse proxying
+* URL rewriting and prefix routing
+* Upstream redirect following (301/302/303/307/308)
+* Jekyll → Docusaurus fallback
+* Static asset interception
+* GitHub Pages SSR-like merging of two upstreams
 
-This repository replaces that system with:
-
-👉 **Cloudflare Pages + Pages Functions**
-👉 No servers, no Docker, no manual TLS
-👉 Full compatibility with JS.org custom domain rules
-👉 Same routing logic, same 404 fallback, same transparent proxying
-👉 Global CDN performance and edge caching
+This achieves **100% feature parity** with the original Nginx setup but is now faster, serverless, globally distributed, and fully compatible with JS.org custom domains.
 
 ---
 
-## 🏗️ Architecture (Cloudflare Pages)
+## 🏗️ Architecture (Cloudflare Pages + _worker.js)
 
-### 🔥 New Architecture — Serverless & Globally Distributed
+### 🔥 Why `_worker.js` is Required
+
+Cloudflare Pages processes requests in this order:
+
+1. Static files (`/public`)
+2. **_worker.js (FULL Worker control)** ← our proxy runs here
+3. Pages Functions (`/functions`)
+
+Pages Functions cannot intercept:
+
+* `/img/*`
+* `/css/*`
+* `/js/*`
+* `/assets/*`
+* `/favicon.ico`
+* `/manifest.json`
+* Any other static-like path
+
+But `_worker.js` intercepts **every** incoming request — making it the correct tool for reverse proxying.
+
+---
+
+### 🌍 Updated System Architecture
 
 ```mermaid
 flowchart LR
     A[Visitor Browser] --> B[DNS: js.org]
     B --> C[Cloudflare Pages<br>wechaty-js-org.pages.dev]
-    C --> D[Pages Function Router]
-    D -->|/docs, /img, /css...| E[Docusaurus<br>wechaty.github.io/docusaurus]
-    D -->|other paths| F[Jekyll<br>wechaty.github.io/jekyll]
-    F -->|404| E
+    C --> D[_worker.js Reverse Proxy<br>Full Worker Runtime]
+    D -->|/docs, /img, /css, /js...| E[Docusaurus<br>wechaty.github.io/docusaurus]
+    D -->|All other paths| F[Jekyll<br>wechaty.github.io/jekyll]
+    F -->|404 fallback| E
     E --> D --> C --> A
 ```
 
@@ -63,26 +83,16 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    A[Incoming Request] --> B{Path starts with:
-/docs
-/press
-/qrcode
-/search
-/img
-/css
-/js
-?}
+    A["Incoming Request"] --> B{"Path matches docs/img/css/js etc?"}
 
-    B -->|Yes| C[Proxy to
-/docusaurus{path}]
-    B -->|No| D[Proxy to
-/jekyll{path}]
+    B -->|Yes| C["Route to Docusaurus<br/>(docusaurus + original path)"]
+    B -->|No| D["Route to Jekyll<br/>(jekyll + original path)"]
 
-    D --> E{Status 404?}
+    D --> E{"Did Jekyll return 404?"}
     E -->|Yes| C
-    E -->|No| F[Return Jekyll Response]
+    E -->|No| F["Return Jekyll Response"]
 
-    C --> G[Return Docusaurus Response]
+    C --> G["Return Docusaurus Response"]
 ```
 
 ### ⚡ Edge Caching Behavior
@@ -91,7 +101,7 @@ flowchart TD
 flowchart TD
     A[Request] --> B{Cache Hit?}
     B -->|Yes| C[Return Cached Response]
-    B -->|No| D[Fetch GitHub Pages<br>Follow Redirects]
+    B -->|No| D[Fetch Upstream<br>Follow Redirects]
     D --> E[Store in Edge Cache]
     E --> C
 ```
@@ -112,7 +122,51 @@ The core logic lives in `functions/[[path]].js` which intercepts **all** incomin
 
 ---
 
-## 🔧 Deployment
+## 🔧 Deployment (Cloudflare Pages + _worker.js)
+
+### 1. Create Cloudflare Pages Project
+
+* Cloudflare Dashboard → **Pages** → *Create Project* → Connect GitHub Repo
+
+### 2. Project Structure
+
+```
+/
+├─ _worker.js          # Full Worker runtime for proxy logic
+├─ public/             # Optional static files
+└─ README.md
+```
+
+### 3. Deploy
+
+Cloudflare builds automatically.
+Deployment URL example:
+
+```
+https://wechaty-js-org.pages.dev
+```
+
+### 4. Configure JS.org Domain
+
+Open PR at: [https://github.com/js-org/js.org](https://github.com/js-org/js.org)
+
+```json
+"wechaty.js.org": "wechaty-js-org.pages.dev"
+```
+
+### 5. Local Development Notes
+
+Cloudflare Pages CLI (`wrangler pages dev`) cannot simulate GitHub Pages reverse proxying — it rewrites origin hosts to localhost.
+
+Use instead:
+
+```bash
+wrangler dev _worker.js
+```
+
+This accurately simulates production Worker behavior.
+
+---
 
 ### 1. Create Cloudflare Pages Project
 
@@ -145,7 +199,24 @@ JS.org maintainers will CNAME `wechaty.js.org` → Cloudflare Pages.
 
 ---
 
-## ⚙️ Cloudflare Pages Function
+## ⚙️ _worker.js — Cloudflare Worker Behavior
+
+The `_worker.js` file provides:
+
+* Full Worker API inside Cloudflare Pages
+* Transparent GitHub Pages reverse proxy
+* Prefix-based routing like original Nginx
+* 404 fallback (Jekyll → Docusaurus)
+* Internal redirect following
+* Edge caching
+* Universal asset handling (`/img`, `/css`, `/js`, etc.)
+
+### Why not Pages Functions?
+
+Pages Functions do **not** run for static-like paths.
+`_worker.js` is necessary to ensure **complete** routing control.
+
+---
 
 The Pages Function implements:
 
